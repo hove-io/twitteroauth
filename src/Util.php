@@ -35,7 +35,7 @@ class Util
      *
      * @return string
      */
-    public static function urldecodeRfc3986($string): string
+    public static function urldecodeRfc3986($string)
     {
         return urldecode($string);
     }
@@ -49,7 +49,7 @@ class Util
      *
      * @return array
      */
-    public static function parseParameters($input): array
+    public static function parseParameters($input)
     {
         if (!is_string($input)) {
             return [];
@@ -86,7 +86,7 @@ class Util
      *
      * @return string
      */
-    public static function buildHttpQuery(array $params): string
+    public static function buildHttpQuery(array $params)
     {
         if (empty($params)) {
             return '';

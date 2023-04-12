@@ -30,17 +30,17 @@ class TwitterOAuth extends Config
     private const UPLOAD_HOST = 'https://upload.twitter.com';
 
     /** @var Response details about the result of the last request */
-    private ?Response $response = null;
+    private $response = null;
     /** @var string|null Application bearer token */
-    private ?string $bearer = null;
+    private $bearer = null;
     /** @var Consumer Twitter application details */
-    private Consumer $consumer;
+    private $consumer;
     /** @var Token|null User access token details */
-    private ?Token $token = null;
+    private $token = null;
     /** @var HmacSha1 OAuth 1 signature type used by Twitter */
-    private HmacSha1 $signatureMethod;
+    private $signatureMethod;
     /** @var int Number of attempts we made for the request */
-    private int $attempts = 0;
+    private $attempts = 0;
 
     /**
      * Constructor
@@ -53,8 +53,8 @@ class TwitterOAuth extends Config
     public function __construct(
         string $consumerKey,
         string $consumerSecret,
-        ?string $oauthToken = null,
-        ?string $oauthTokenSecret = null,
+        $oauthToken = null,
+        $oauthTokenSecret = null,
     ) {
         $this->resetLastResponse();
         $this->signatureMethod = new HmacSha1();
@@ -74,7 +74,7 @@ class TwitterOAuth extends Config
     public function setOauthToken(
         string $oauthToken,
         string $oauthTokenSecret,
-    ): void {
+    ) {
         $this->token = new Token($oauthToken, $oauthTokenSecret);
         $this->bearer = null;
     }
@@ -82,7 +82,7 @@ class TwitterOAuth extends Config
     /**
      * @param string $oauthTokenSecret
      */
-    public function setBearer(string $oauthTokenSecret): void
+    public function setBearer(string $oauthTokenSecret)
     {
         $this->bearer = $oauthTokenSecret;
         $this->token = null;
@@ -91,7 +91,7 @@ class TwitterOAuth extends Config
     /**
      * @return string|null
      */
-    public function getLastApiPath(): ?string
+    public function getLastApiPath()
     {
         return $this->response->getApiPath();
     }
@@ -99,7 +99,7 @@ class TwitterOAuth extends Config
     /**
      * @return int
      */
-    public function getLastHttpCode(): int
+    public function getLastHttpCode()
     {
         return $this->response->getHttpCode();
     }
@@ -107,7 +107,7 @@ class TwitterOAuth extends Config
     /**
      * @return array
      */
-    public function getLastXHeaders(): array
+    public function getLastXHeaders()
     {
         return $this->response->getXHeaders();
     }
@@ -123,7 +123,7 @@ class TwitterOAuth extends Config
     /**
      * Resets the last response cache.
      */
-    public function resetLastResponse(): void
+    public function resetLastResponse()
     {
         $this->response = new Response();
     }
@@ -131,7 +131,7 @@ class TwitterOAuth extends Config
     /**
      * Resets the attempts number.
      */
-    private function resetAttemptsNumber(): void
+    private function resetAttemptsNumber()
     {
         $this->attempts = 0;
     }
@@ -139,7 +139,7 @@ class TwitterOAuth extends Config
     /**
      * Delays the retries when they're activated.
      */
-    private function sleepIfNeeded(): void
+    private function sleepIfNeeded()
     {
         if ($this->maxRetries && $this->attempts) {
             sleep($this->retriesDelay);
@@ -154,7 +154,7 @@ class TwitterOAuth extends Config
      *
      * @return string
      */
-    public function url(string $path, array $parameters): string
+    public function url(string $path, array $parameters)
     {
         $this->resetLastResponse();
         $this->response->setApiPath($path);
@@ -171,7 +171,7 @@ class TwitterOAuth extends Config
      * @return array
      * @throws TwitterOAuthException
      */
-    public function oauth(string $path, array $parameters = []): array
+    public function oauth(string $path, array $parameters = [])
     {
         $response = [];
         $this->resetLastResponse();
@@ -413,7 +413,7 @@ class TwitterOAuth extends Config
      *
      * @return array
      */
-    private function mediaInitParameters(array $parameters): array
+    private function mediaInitParameters(array $parameters)
     {
         $allowed_keys = [
             'media_type',
@@ -549,7 +549,7 @@ class TwitterOAuth extends Config
      *
      * @return bool
      */
-    private function requestsAvailable(): bool
+    private function requestsAvailable()
     {
         return $this->maxRetries &&
             $this->attempts <= $this->maxRetries &&
@@ -614,7 +614,7 @@ class TwitterOAuth extends Config
      *
      * @return array
      */
-    private function curlOptions(): array
+    private function curlOptions()
     {
         $bundlePath = CaBundle::getSystemCaRootBundlePath();
         $options = [
@@ -663,7 +663,7 @@ class TwitterOAuth extends Config
         string $authorization,
         array $postfields,
         bool $json = false,
-    ): string {
+    ) {
         $options = $this->curlOptions();
         $options[CURLOPT_URL] = $url;
         $options[CURLOPT_HTTPHEADER] = [
@@ -735,7 +735,7 @@ class TwitterOAuth extends Config
      *
      * @return array
      */
-    private function parseHeaders(string $header): array
+    private function parseHeaders(string $header)
     {
         $headers = [];
         foreach (explode("\r\n", $header) as $line) {
@@ -755,7 +755,7 @@ class TwitterOAuth extends Config
      *
      * @return string
      */
-    private function encodeAppAuthorization(Consumer $consumer): string
+    private function encodeAppAuthorization(Consumer $consumer)
     {
         $key = rawurlencode($consumer->key);
         $secret = rawurlencode($consumer->secret);
@@ -768,7 +768,7 @@ class TwitterOAuth extends Config
      * @param string $path
      * @return int
      */
-    private function curlCaOpt(string $path): int
+    private function curlCaOpt(string $path)
     {
         return is_dir($path) ? CURLOPT_CAPATH : CURLOPT_CAINFO;
     }
@@ -786,7 +786,7 @@ class TwitterOAuth extends Config
         array $options,
         array $postfields,
         bool $json,
-    ): array {
+    ) {
         if ($json) {
             $options[CURLOPT_HTTPHEADER][] = 'Content-type: application/json';
             $options[CURLOPT_POSTFIELDS] = json_encode(

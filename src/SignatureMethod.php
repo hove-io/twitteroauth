@@ -55,7 +55,7 @@ abstract class SignatureMethod
         Consumer $consumer,
         Token $token,
         string $signature,
-    ): bool {
+    ) {
         $built = $this->buildSignature($request, $consumer, $token);
 
         // Check for zero length, although unlikely here

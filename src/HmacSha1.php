@@ -33,7 +33,7 @@ class HmacSha1 extends SignatureMethod
         Request $request,
         Consumer $consumer,
         Token $token = null,
-    ): string {
+    ) {
         $signatureBase = $request->getSignatureBaseString();
 
         $parts = [$consumer->secret, null !== $token ? $token->secret : ''];

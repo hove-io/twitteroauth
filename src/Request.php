@@ -27,7 +27,7 @@ class Request
     public function __construct(
         string $httpMethod,
         string $httpUrl,
-        ?array $parameters = [],
+        $parameters = [],
     ) {
         $parameters = array_merge(
             Util::parseParameters(parse_url($httpUrl, PHP_URL_QUERY)),
@@ -92,7 +92,7 @@ class Request
      *
      * @return string|null
      */
-    public function getParameter(string $name): ?string
+    public function getParameter(string $name)
     {
         return $this->parameters[$name] ?? null;
     }
@@ -100,7 +100,7 @@ class Request
     /**
      * @return array
      */
-    public function getParameters(): array
+    public function getParameters()
     {
         return $this->parameters;
     }
@@ -108,7 +108,7 @@ class Request
     /**
      * @param string $name
      */
-    public function removeParameter(string $name): void
+    public function removeParameter(string $name)
     {
         unset($this->parameters[$name]);
     }
@@ -118,7 +118,7 @@ class Request
      *
      * @return string
      */
-    public function getSignableParameters(): string
+    public function getSignableParameters()
     {
         // Grab all parameters
         $params = $this->parameters;
@@ -141,7 +141,7 @@ class Request
      *
      * @return string
      */
-    public function getSignatureBaseString(): string
+    public function getSignatureBaseString()
     {
         $parts = [
             $this->getNormalizedHttpMethod(),
@@ -159,7 +159,7 @@ class Request
      *
      * @return string
      */
-    public function getNormalizedHttpMethod(): string
+    public function getNormalizedHttpMethod()
     {
         return strtoupper($this->httpMethod);
     }
@@ -170,7 +170,7 @@ class Request
      *
      * @return string
      */
-    public function getNormalizedHttpUrl(): string
+    public function getNormalizedHttpUrl()
     {
         $parts = parse_url($this->httpUrl);
 
@@ -186,7 +186,7 @@ class Request
      *
      * @return string
      */
-    public function toUrl(): string
+    public function toUrl()
     {
         $postData = $this->toPostdata();
         $out = $this->getNormalizedHttpUrl();
@@ -201,7 +201,7 @@ class Request
      *
      * @return string
      */
-    public function toPostdata(): string
+    public function toPostdata()
     {
         return Util::buildHttpQuery($this->parameters);
     }
@@ -212,7 +212,7 @@ class Request
      * @return string
      * @throws TwitterOAuthException
      */
-    public function toHeader(): string
+    public function toHeader()
     {
         $first = true;
         $out = 'Authorization: OAuth';
@@ -239,7 +239,7 @@ class Request
     /**
      * @return string
      */
-    public function __toString(): string
+    public function __toString()
     {
         return $this->toUrl();
     }
@@ -273,14 +273,14 @@ class Request
         SignatureMethod $signatureMethod,
         Consumer $consumer,
         Token $token = null,
-    ): string {
+    ) {
         return $signatureMethod->buildSignature($this, $consumer, $token);
     }
 
     /**
      * @return string
      */
-    public static function generateNonce(): string
+    public static function generateNonce()
     {
         return md5(microtime() . random_int(PHP_INT_MIN, PHP_INT_MAX));
     }

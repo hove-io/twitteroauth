@@ -49,7 +49,7 @@ class Config
      *
      * @param string $apiVersion
      */
-    public function setApiVersion(string $apiVersion): void
+    public function setApiVersion(string $apiVersion)
     {
         if (in_array($apiVersion, self::SUPPORTED_VERSIONS, true)) {
             $this->apiVersion = $apiVersion;
@@ -64,7 +64,7 @@ class Config
      * @param int $connectionTimeout
      * @param int $timeout
      */
-    public function setTimeouts(int $connectionTimeout, int $timeout): void
+    public function setTimeouts(int $connectionTimeout, int $timeout)
     {
         $this->connectionTimeout = $connectionTimeout;
         $this->timeout = $timeout;
@@ -76,7 +76,7 @@ class Config
      * @param int $maxRetries
      * @param int $retriesDelay
      */
-    public function setRetries(int $maxRetries, int $retriesDelay): void
+    public function setRetries(int $maxRetries, int $retriesDelay)
     {
         $this->maxRetries = $maxRetries;
         $this->retriesDelay = $retriesDelay;
@@ -85,7 +85,7 @@ class Config
     /**
      * @param bool $value
      */
-    public function setDecodeJsonAsArray(bool $value): void
+    public function setDecodeJsonAsArray(bool $value)
     {
         $this->decodeJsonAsArray = $value;
     }
@@ -93,7 +93,7 @@ class Config
     /**
      * @param string $userAgent
      */
-    public function setUserAgent(string $userAgent): void
+    public function setUserAgent(string $userAgent)
     {
         $this->userAgent = $userAgent;
     }
@@ -101,7 +101,7 @@ class Config
     /**
      * @param array $proxy
      */
-    public function setProxy(array $proxy): void
+    public function setProxy(array $proxy)
     {
         $this->proxy = $proxy;
     }
@@ -111,7 +111,7 @@ class Config
      *
      * @param boolean $gzipEncoding
      */
-    public function setGzipEncoding(bool $gzipEncoding): void
+    public function setGzipEncoding(bool $gzipEncoding)
     {
         $this->gzipEncoding = $gzipEncoding;
     }
@@ -121,7 +121,7 @@ class Config
      *
      * @param int $value
      */
-    public function setChunkSize(int $value): void
+    public function setChunkSize(int $value)
     {
         $this->chunkSize = $value;
     }
