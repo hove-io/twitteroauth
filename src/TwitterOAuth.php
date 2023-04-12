@@ -788,8 +788,7 @@ class TwitterOAuth extends Config
         if ($json) {
             $options[CURLOPT_HTTPHEADER][] = 'Content-type: application/json';
             $options[CURLOPT_POSTFIELDS] = json_encode(
-                $postfields,
-                JSON_THROW_ON_ERROR
+                $postfields
             );
         } else {
             $options[CURLOPT_POSTFIELDS] = Util::buildHttpQuery($postfields);
