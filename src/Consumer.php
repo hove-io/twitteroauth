@@ -26,7 +26,7 @@ class Consumer
     public function __construct(
         $key,
         $secret,
-        $callbackUrl = null,
+        $callbackUrl = null
     ) {
         $this->key = $key;
         $this->secret = $secret;
