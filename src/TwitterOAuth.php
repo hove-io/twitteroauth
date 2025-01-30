@@ -533,7 +533,6 @@ class TwitterOAuth extends Config
         do {
             $this->sleepIfNeeded();
             $result = $this->oAuthRequest($url, $method, $parameters, $json);
-
             $response = JsonDecoder::decode($result, $this->decodeJsonAsArray);
             $this->response->setBody($response);
             $this->attempts++;
