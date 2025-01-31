@@ -539,6 +539,10 @@ class TwitterOAuth extends Config
             // Retry up to our $maxRetries number if we get errors greater than 500 (over capacity etc)
         } while ($this->requestsAvailable());
 
+        if (isset($response->status) && $response->status != 200) {
+            throw new TwitterOAuthException($result);
+        }
+
         return $response;
     }
 
